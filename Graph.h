@@ -17,6 +17,7 @@ public:
     void BFS(int);
     void DFS(int);
 
+    std::vector<std::vector<int>> transpose();
     std::vector<int> shortestPath(int, int);
     void findAllPaths(int, int, std::vector<bool>&, std::vector<int>&);
     void printAllPaths(int, int);

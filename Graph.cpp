@@ -7,7 +7,7 @@ void Graph::addVertex(int val) {
 
 void Graph::addEdgeBetweenVertices(int vertex1, int vertex2) {
     vertices[vertex1].neighbors.push_back(vertex2);
-    vertices[vertex2].neighbors.push_back(vertex1); // For undirected graph
+    //vertices[vertex2].neighbors.push_back(vertex1); // For undirected graph
 }
 
 void Graph::printAdjacencyList() {
@@ -62,6 +62,19 @@ void Graph::DFS(int start) {
     }
 }
 
+std::vector<std::vector<int>> Graph::transpose() {
+    int size = vertices.size();
+    std::vector<std::vector<int>> transposedGraph(size);
+
+    for(int i = 0; i < size; ++i) {
+        for(int vertex : vertices[i].neighbors) {
+            transposedGraph[vertex].push_back(i);
+        }
+    }
+
+    return transposedGraph;
+}
+
 std::vector<int> Graph::shortestPath(int vertex1, int vertex2) {
     std::vector<int> parent(vertices.size(), -1);
     std::queue<int> queue;
@@ -113,8 +126,8 @@ void Graph::findAllPaths(int current, int target, std::vector<bool> &visited, st
     }
 
     // Backtrack
-    visited[current] = false;
     path.pop_back();
+    visited[current] = false;
 }
 
 void Graph::printAllPaths(int vertex1, int vertex2) {
