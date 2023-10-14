@@ -1,4 +1,3 @@
-```markdown
 # Graph Algorithms Implementation
 
 This C++ project implements various graph algorithms, including breadth-first search (BFS), depth-first search (DFS), shortest path algorithms, cycle detection, and topological sorting. It provides a set of functionalities to work with graph data structures.
@@ -10,6 +9,7 @@ This C++ project implements various graph algorithms, including breadth-first se
 - [Implemented Algorithms](#implemented-algorithms)
 - [How to Run](#how-to-run)
 - [Contributing](#contributing)
+- [License](#license)
 
 ## Installation
 
@@ -17,7 +17,6 @@ To use this project, clone the repository to your local machine:
 
 ```bash
 git clone https://github.com/RazmikManukyan/Graph.git
-```
 
 ## Usage
 
