@@ -1,8 +1,7 @@
-
 ```markdown
 # Graph Algorithms Implementation
 
-This project implements various graph algorithms in C++. It provides functionalities for creating a graph, adding vertices and edges, performing breadth-first search (BFS), depth-first search (DFS), finding shortest paths, detecting cycles, and more.
+This C++ project implements various graph algorithms, including breadth-first search (BFS), depth-first search (DFS), shortest path algorithms, cycle detection, and topological sorting. It provides a set of functionalities to work with graph data structures.
 
 ## Table of Contents
 
@@ -14,17 +13,15 @@ This project implements various graph algorithms in C++. It provides functionali
 
 ## Installation
 
-Clone the repository to your local machine:
+To use this project, clone the repository to your local machine:
 
-```
+```bash
 git clone https://github.com/RazmikManukyan/Graph.git
 ```
 
 ## Usage
 
-This project provides a C++ implementation of various graph algorithms. You can include the `Graph.h` and `Vertex.h` files in your C++ project to use these algorithms.
-
-Example usage:
+Include the necessary header files in your C++ project to use the implemented graph algorithms. For example:
 
 ```cpp
 #include "Graph.h"
@@ -50,15 +47,11 @@ int main() {
 
 ## Implemented Algorithms
 
-- Breadth-First Search (BFS)
-- Depth-First Search (DFS)
-- Shortest Path (BFS-based)
-- Connected Components Count
-- Nodes at Level Count
-- All Paths between Two Vertices
-- Cycle Detection
-- Topological Sorting (Kahn's Algorithm)
-- Topological Sorting (DFS-based)
+- **Breadth-First Search (BFS)**
+- **Depth-First Search (DFS)**
+- **Shortest Path Algorithms**
+- **Cycle Detection**
+- **Topological Sorting**
 
 ## How to Run
 
