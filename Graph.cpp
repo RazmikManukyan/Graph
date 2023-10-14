@@ -3,11 +3,15 @@
 void Graph::addVertex(int val) {
     Vertex newVertex(val);
     vertices.push_back(newVertex);
+    inDegree.push_back(0);// Initialize in-degree for the new vertex.
+    outDegree.push_back(0);// Initialize out-degree for the new vertex.
 }
 
 void Graph::addEdgeBetweenVertices(int vertex1, int vertex2) {
-    vertices[vertex1].neighbors.push_back(vertex2);
+    vertices[vertex1].neighbors.push_back(vertex2);// Add vertex2 to the neighbors of vertex1.
     //vertices[vertex2].neighbors.push_back(vertex1); // For undirected graph
+    outDegree[vertex1]++;// Increase out-degree of vertex1.
+    inDegree[vertex2]++;// Increase in-degree of vertex1.
 }
 
 void Graph::printAdjacencyList() {
@@ -17,6 +21,12 @@ void Graph::printAdjacencyList() {
             std::cout << vertices[i].neighbors[j] << " ";
         }
         std::cout << std::endl;
+    }
+}
+
+void Graph::printDegrees() {
+    for(int i = 0; i < vertices.size(); ++i) {
+        std::cout << "Vertex " << i << ": In-Degree = " << inDegree[i] << ", Out-Degree = " << outDegree[i] << std::endl;
     }
 }
 
@@ -107,6 +117,61 @@ std::vector<int> Graph::shortestPath(int vertex1, int vertex2) {
     return path;
 }
 
+int Graph::countComponents() {
+    std::vector<bool> visited(vertices.size(), false);
+    int components = 0;
+
+    for(int i = 0; i < vertices.size(); ++i) {
+        if(!visited[i]) {
+            std::stack<int> stack;
+            stack.push(i);
+            visited[i] = true;
+
+            while (!stack.empty()) {
+                int current = stack.top();
+                stack.pop();
+
+                for (int neighbor: vertices[current].neighbors) {
+                    if (!visited[neighbor]) {
+                        stack.push(neighbor);
+                        visited[neighbor] = true;
+                    }
+                }
+            }
+            components++;
+        }
+    }
+    return components;
+}
+
+int Graph::countNodesAtLevel(int start, int targetLevel) {
+    std::vector<int> levels(vertices.size(), -1);
+    std::queue<int> queue;
+
+    queue.push(start);
+    levels[start] = 0;
+
+    while(!queue.empty()) {
+        int current = queue.front();
+        queue.pop();
+
+        for(int neighbor : vertices[current].neighbors) {
+            if(levels[neighbor] == -1) {
+                levels[neighbor] = levels[current] + 1;
+                queue.push(neighbor);
+            }
+        }
+    }
+
+    int count = 0;
+    for(int level : levels) {
+        if(level == targetLevel) {
+            count++;
+        }
+    }
+    return count;
+}
+
 void Graph::findAllPaths(int current, int target, std::vector<bool> &visited, std::vector<int> &path) {
     visited[current] = true;
     path.push_back(current);
@@ -134,4 +199,97 @@ void Graph::printAllPaths(int vertex1, int vertex2) {
     std::vector<bool> visited(vertices.size(), false);
     std::vector<int> path;
     findAllPaths(vertex1, vertex2, visited, path);
+}
+
+bool Graph::hasCycle() {
+    std::vector<bool> visited(vertices.size(), false);
+    std::unordered_set<int> recursionStack;
+
+    for(int i = 0; i < vertices.size(); ++i) {
+        if(!visited[0] && isCyclicUtil(i, visited, recursionStack)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Graph::isCyclicUtil(int node, std::vector<bool> &visited, std::unordered_set<int> &recursionStack) {
+    visited[node] = true;
+    recursionStack.insert(node);
+
+    for(int neighbor : vertices[node].neighbors) {
+        if(!visited[neighbor] && isCyclicUtil(neighbor, visited, recursionStack)) {
+            return true;
+        } else if(recursionStack.count(neighbor)) {
+            return true;
+        }
+    }
+
+    recursionStack.erase(node);
+    return false;
+}
+
+std::vector<int> Graph::topologicalSorting() {
+    int numVertices = vertices.size();
+    std::vector<int> InDegree = inDegree;
+
+    std::queue<int> queue;
+    for(int i = 0; i < InDegree.size(); ++i) {
+        if(InDegree[i] == 0) {
+            queue.push(i);
+        }
+    }
+    std::vector<int> result;
+    while(!queue.empty()) {
+        int current = queue.front();
+        queue.pop();
+        result.push_back(current);
+
+        for(int neighbor : vertices[current].neighbors) {
+            InDegree[neighbor]--;
+            if(InDegree[neighbor] == 0) {
+                queue.push(neighbor);
+            }
+        }
+    }
+
+    // Check for cycles
+    if(result.size() != numVertices) {
+        // Graph has a cycle
+        return {};
+    }
+    return result;
+}
+
+std::stack<int> Graph::topologicalSort() {
+    std::vector<bool> visited(vertices.size(), false);
+    std::stack<int> result;
+
+    for(int i = 0; i < vertices.size(); ++i) {
+        if(!visited[i]) {
+            topologicalSortUtil(i, visited, result);
+        }
+    }
+    return result;
+}
+
+std::stack<int> Graph::topologicalSort(int source) {
+    std::vector<bool> visited(vertices.size(), false);
+    std::stack<int> result;
+
+    topologicalSortUtil(source, visited, result);
+
+    return result;
+}
+
+void Graph::topologicalSortUtil(int node, std::vector<bool> &visited, std::stack<int> &result) {
+    visited[node] = true;
+
+    for(int neighbor : vertices[node].neighbors) {
+        if(!visited[neighbor]) {
+            topologicalSortUtil(neighbor, visited, result);
+        }
+    }
+
+    result.push(node);
 }
