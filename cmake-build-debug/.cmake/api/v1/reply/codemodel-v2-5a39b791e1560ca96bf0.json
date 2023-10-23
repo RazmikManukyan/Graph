@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "/home/user/Graph/cmake-build-debug",
-		"source" : "/home/user/Graph"
+		"build" : "/home/user/Projects/Graph/cmake-build-debug",
+		"source" : "/home/user/Projects/Graph"
 	},
 	"version" : 
 	{

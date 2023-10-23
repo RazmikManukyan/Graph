@@ -25,7 +25,11 @@ public:
     void BFS(int); // Breadth-first search algorithm starting from a specific vertex.
     void DFS(int);// Depth-first search algorithm starting from a specific vertex.
 
+    void KosorajuDFS(int vertex, std::vector<bool>& visited, std::stack<int>& stack);
+    void KosorajuDFS(int vertex, std::vector<bool>& visited, std::vector<int>& component);
+    std::vector<std::vector<int>> KosorajuSCC();
     std::vector<std::vector<int>> transpose();// Function to calculate the transpose of the graph.
+    Graph getTranspose();
     std::vector<int> shortestPath(int, int); // Function to find the shortest path between two vertices using BFS.
     int countComponents();// Function to count the connected components in the graph.
     int countNodesAtLevel(int, int);// Function to count the number of nodes at a specific level from a starting vertex.
@@ -37,7 +41,7 @@ public:
     std::vector<int> topologicalSorting();// Function to perform topological sorting using Kahn's algorithm.
     std::stack<int> topologicalSort();// Function to perform topological sorting using DFS.
     std::stack<int> topologicalSort(int);// Function to perform topological sorting starting from a specific vertex using DFS.
-    void topologicalSortUtil(int, std::vector<bool>&, std::stack<int>&);// Utility function for DFS-based topological sorting.
+    void topologicalSortUtil(int, std::vector<bool>&, std::stack<int>&);// Utility function for DFS-based topological sorting.To
 };
 
 #endif //GRAPH_GRAPH_H

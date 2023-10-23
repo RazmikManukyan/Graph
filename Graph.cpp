@@ -51,6 +51,63 @@ void Graph::BFS(int start) {
     }
 }
 
+void Graph::KosorajuDFS(int vertex, std::vector<bool> &visited, std::stack<int>& stack) {
+    visited[vertex] = true;
+
+    for (int neighbor : vertices[vertex].neighbors) {
+        if (!visited[neighbor]) {
+            KosorajuDFS(neighbor, visited, stack);
+        }
+    }
+
+    stack.push(vertex);
+}
+
+void Graph::KosorajuDFS(int vertex, std::vector<bool> &visited, std::vector<int> &component) {
+    visited[vertex] = true;
+    component.push_back(vertex);
+
+    for(int neighbor : vertices[vertex].neighbors) {
+        if(!visited[neighbor]) {
+            KosorajuDFS(neighbor, visited, component);
+        }
+    }
+}
+
+std::vector<std::vector<int>> Graph::KosorajuSCC() {
+    std::vector<bool> visited(vertices.size(), false);
+    std::stack<int> stack;
+
+    // First DFS to fill the stack with vertices in order of their finish times
+    for(int i = 0; i < vertices.size(); ++i) {
+        if(!visited[i]) {
+            KosorajuDFS(i, visited, stack);
+        }
+    }
+
+    // Transpose the graph
+    Graph transposedGraph = getTranspose();
+
+    // Reset visited array for the second DFS
+    std::fill(visited.begin(), visited.end(), false);
+
+    std::vector<std::vector<int>> stronglyConnectedComponents;
+
+    // Second DFS on the transposed graph to find strongly connected components
+    while(!stack.empty()) {
+        int vertex = stack.top();
+        stack.pop();
+
+        if(!visited[vertex]) {
+            std::vector<int> component;
+            transposedGraph.KosorajuDFS(vertex, visited, component);
+            stronglyConnectedComponents.push_back(component);
+        }
+    }
+
+    return stronglyConnectedComponents;
+}
+
 void Graph::DFS(int start) {
     std::vector<bool> visited(vertices.size(), false);
     std::stack<int> stack;
@@ -79,6 +136,24 @@ std::vector<std::vector<int>> Graph::transpose() {
     for(int i = 0; i < size; ++i) {
         for(int vertex : vertices[i].neighbors) {
             transposedGraph[vertex].push_back(i);
+        }
+    }
+
+    return transposedGraph;
+}
+
+Graph Graph::getTranspose() {
+    Graph transposedGraph;
+
+    // Add vertices to the transposed graph
+    for(int i = 0; i < vertices.size(); ++i) {
+        transposedGraph.addVertex(i);
+    }
+
+    // Add reversed edges to the transposed graph
+    for(int i = 0; i < vertices.size(); ++i) {
+        for(int neighbor : vertices[i].neighbors) {
+            transposedGraph.addEdgeBetweenVertices(neighbor, i);
         }
     }
 
@@ -293,3 +368,4 @@ void Graph::topologicalSortUtil(int node, std::vector<bool> &visited, std::stack
 
     result.push(node);
 }
+

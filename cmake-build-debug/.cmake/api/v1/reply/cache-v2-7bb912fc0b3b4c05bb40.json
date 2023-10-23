@@ -55,7 +55,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/user/Graph/cmake-build-debug"
+			"value" : "/home/user/Projects/Graph/cmake-build-debug"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -543,7 +543,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/user/Graph/cmake-build-debug/CMakeFiles/pkgRedirects"
+			"value" : "/home/user/Projects/Graph/cmake-build-debug/CMakeFiles/pkgRedirects"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -603,7 +603,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/user/Graph"
+			"value" : "/home/user/Projects/Graph"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -1135,7 +1135,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/user/Graph/cmake-build-debug"
+			"value" : "/home/user/Projects/Graph/cmake-build-debug"
 		},
 		{
 			"name" : "Graph_IS_TOP_LEVEL",
@@ -1159,7 +1159,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/user/Graph"
+			"value" : "/home/user/Projects/Graph"
 		},
 		{
 			"name" : "_CMAKE_LINKER_PUSHPOP_STATE_SUPPORTED",
