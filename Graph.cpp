@@ -108,6 +108,59 @@ std::vector<std::vector<int>> Graph::KosorajuSCC() {
     return stronglyConnectedComponents;
 }
 
+
+
+std::vector<std::vector<int>> Graph::TarjanSCC() {
+    std::vector<std::vector<int>> SCCs;
+    std::vector<int> ids(vertices.size(), -1);
+    std::vector<int> low(vertices.size(), 0);
+    std::vector<bool> onStack(vertices.size(), false);
+    std::stack<int> stack;
+
+    for(int i = 0; i < vertices.size(); ++i) {
+        if(ids[i] == -1) {
+            TarjanDFS(i, i, ids, low, onStack, stack, SCCs);
+        }
+    }
+
+    return SCCs;
+}
+
+void Graph::TarjanDFS(int startVertex, int vertex, std::vector<int> &ids, std::vector<int> &low,
+                      std::vector<bool> &onStack, std::stack<int> &stack, std::vector<std::vector<int>> &SCCs) {
+
+    stack.push(vertex);
+    onStack[vertex] = true;
+    static int id = 0;
+    ids[vertex] = low[vertex] = id++;
+
+    for(int neighbor : vertices[vertex].neighbors) {
+        if(ids[neighbor] == -1) {
+            TarjanDFS(startVertex, neighbor, ids, low, onStack, stack, SCCs);
+        }
+        if(onStack[neighbor]){
+            low[vertex] = std::min(low[vertex], low[neighbor]);
+        }
+    }
+
+    if(low[vertex] == ids[vertex]) {
+        std::vector<int> scc;
+        int stackTop;
+
+        do {
+            stackTop = stack.top();
+            stack.pop();
+            onStack[stackTop] = false;
+            scc.push_back(stackTop);
+        } while (stackTop != vertex);
+
+        // If the SCC contains more than one vertex or if it is not the start vertex, add it to the result
+        if(scc.size() > 1 || stackTop != startVertex) {
+            SCCs.push_back(scc);
+        }
+    }
+}
+
 void Graph::DFS(int start) {
     std::vector<bool> visited(vertices.size(), false);
     std::stack<int> stack;

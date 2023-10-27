@@ -27,7 +27,10 @@ public:
 
     void KosorajuDFS(int vertex, std::vector<bool>& visited, std::stack<int>& stack);
     void KosorajuDFS(int vertex, std::vector<bool>& visited, std::vector<int>& component);
+    void TarjanDFS(int startVertex, int vertex, std::vector<int>& ids, std::vector<int>& low,
+                   std::vector<bool>& onStack, std::stack<int>& stack, std::vector<std::vector<int>>& SCCs);
     std::vector<std::vector<int>> KosorajuSCC();
+    std::vector<std::vector<int>> TarjanSCC();
     std::vector<std::vector<int>> transpose();// Function to calculate the transpose of the graph.
     Graph getTranspose();
     std::vector<int> shortestPath(int, int); // Function to find the shortest path between two vertices using BFS.
